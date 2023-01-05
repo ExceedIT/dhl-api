@@ -137,6 +137,11 @@ abstract class Base
             } elseif (isset($this->params[$childName]['multivalues']) && $this->params[$childName]['multivalues']) {
                 foreach ($child->children() as $sub_child) {
                     $sub_child_name = $sub_child->getName();
+                    
+                    //EXCUSTOM: This fix is taken from teh Entieis/Base.php initFromXML for where there is a complex child type
+                    if ($sub_child->count() > 1) {
+                        $sub_child_name .= 's';
+                    }
                     $child_class_name = implode('\\', $parts) . '\\' . $this->params[$sub_child_name]['type'];
                     $child_class_name = str_replace('Entity', 'Datatype', $child_class_name);
                     if ('string' == $this->params[$sub_child_name]['type']) {
